@@ -26,7 +26,7 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-final class Library {
+struct Library {
   var sortedBooks: [Book] { booksCache }
 
   /// An in-memory cache of the manually-sorted books that are persistently stored.
