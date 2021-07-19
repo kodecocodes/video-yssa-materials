@@ -9,3 +9,4 @@ Each edition has its own branch, named `versions/[VERSION]`. The default branch 
 | Branch                                                                            | Version | Release Date |
 | --------------------------------------------------------------------------------- |:-------:|:------------:|
 | [versions/2.0](https://github.com/raywenderlich/video-yssa-materials/tree/versions/2.0) | 2.0     | 2020-09-23   |
+| [versions/3.0](https://github.com/raywenderlich/video-yssa-materials/tree/versions/3.0) | 3.0     | 2021-??-??   |
