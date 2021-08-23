@@ -31,7 +31,7 @@ import SwiftUI
 
 extension PHPickerViewController {
   struct View {
-    @Binding var image: UIImage?
+    @Binding var image: Image?
   }
 }
 
@@ -57,7 +57,11 @@ extension PHPickerViewController.Delegate: PHPickerViewControllerDelegate {
     didFinishPicking results: [PHPickerResult]
   ) {
     results.first?.itemProvider.loadObject(ofClass: UIImage.self) { image, error in
-      DispatchQueue.main.async { self.image = image as? UIImage }
+      DispatchQueue.main.async {
+        if let uiImage = image as? UIImage {        
+          self.image = Image(uiImage: uiImage)
+        }
+      }
     }
 
     picker.dismiss(animated: true)
@@ -67,10 +71,10 @@ extension PHPickerViewController.Delegate: PHPickerViewControllerDelegate {
 // MARK: - private
 private extension PHPickerViewController {
   final class Delegate {
-    init(image: Binding<UIImage?>) {
+    init(image: Binding<Image?>) {
       _image = image
     }
 
-    @Binding var image: UIImage?
+    @Binding var image: Image?
   }
 }
