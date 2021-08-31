@@ -1,4 +1,4 @@
-/// Copyright (c) 2020 Razeware LLC
+/// Copyright (c) 2021 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -17,6 +17,10 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
+///
+/// This project and source code may use libraries or frameworks that are
+/// released under various Open-Source licenses. Use of those libraries and
+/// frameworks are governed by their own individual licenses.
 ///
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -39,29 +43,24 @@ struct ContentView: View {
           addingNewBook = true
         } label: {
           Spacer()
-          
           VStack(spacing: 6) {
             Image(systemName: "book.circle")
               .font(.system(size: 60))
             Text("Add New Book")
               .font(.title2)
           }
-          
           Spacer()
         }
-        .buttonStyle(BorderlessButtonStyle())
+        .buttonStyle(.borderless)
         .padding(.vertical, 8)
-        .sheet(
-          isPresented: $addingNewBook,
-          content: NewBookView.init
-        )
+        .sheet(isPresented: $addingNewBook, content: NewBookView.init)
         
         ForEach(Section.allCases, id: \.self) {
           SectionView(section: $0)
         }
       }
       .listStyle(.insetGrouped)
-      .navigationBarTitle("My Library")
+      .navigationTitle("My Library")
     }
   }
 }
@@ -71,23 +70,11 @@ private struct BookRow: View {
   @EnvironmentObject var library: Library
   
   var body: some View {
-    NavigationLink(
-      destination: DetailView(book: book)
-    ) {
+    NavigationLink(destination: DetailView(book: book)) {
       HStack {
-        Book.Image(
-          uiImage: library.uiImages[book],
-          title: book.title,
-          size: 80,
-          cornerRadius: 12
-        )
-        
+        Book.Image(image: library.images[book], title: book.title, size: 80, cornerRadius: 12)
         VStack(alignment: .leading) {
-          TitleAndAuthorStack(
-            book: book,
-            titleFont: .title2,
-            authorFont: .title3
-          )
+          TitleAndAuthorStack(book: book, titleFont: .title2, authorFont: .title3)
           
           if !book.microReview.isEmpty {
             Spacer()
@@ -97,11 +84,6 @@ private struct BookRow: View {
           }
         }
         .lineLimit(1)
-        
-        Spacer()
-        
-        BookmarkButton(book: book)
-          .buttonStyle(BorderlessButtonStyle())
       }
       .padding(.vertical, 8)
     }
@@ -132,13 +114,14 @@ private struct SectionView: View {
           Image("BookTexture")
             .resizable()
             .scaledToFit()
+          
           Text(title)
             .font(.custom("American Typewriter", size: 24))
             .foregroundColor(.primary)
         }
         .listRowInsets(.init())
-        .padding(.vertical)
       }
+
     }
   }
 }

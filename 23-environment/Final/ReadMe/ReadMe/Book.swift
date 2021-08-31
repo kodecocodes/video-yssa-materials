@@ -1,4 +1,3 @@
-import Foundation
 /// Copyright (c) 2021 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,12 +30,14 @@ import Foundation
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
+import Combine
+
 class Book: ObservableObject {
   @Published var title: String
   @Published var author: String
   @Published var microReview: String
   @Published var readMe: Bool
-  
+
   init(
     title: String = "Title",
     author: String = "Author",

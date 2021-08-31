@@ -1,4 +1,3 @@
-import Foundation
 /// Copyright (c) 2021 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -36,7 +35,7 @@ class Book {
   let author: String
   var microReview: String
   var readMe: Bool
-  
+
   init(
     title: String = "Title",
     author: String = "Author",

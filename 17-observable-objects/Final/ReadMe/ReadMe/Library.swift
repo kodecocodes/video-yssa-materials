@@ -33,13 +33,10 @@
 import SwiftUI
 
 struct Library {
-  var sortedBooks: [Book] {
-    get { booksCache }
-    set { booksCache = newValue }
-  }
+  var sortedBooks: [Book] { booksCache }
 
   /// An in-memory cache of the manually-sorted books.
-   private var booksCache: [Book] = [
+  private var booksCache: [Book] = [
     .init(title: "Ein Neues Land", author: "Shaun Tan"),
     .init(title: "Bosch", author: "Laurinda Dixon"),
     .init(title: "Dare to Lead", author: "Brené Brown"),

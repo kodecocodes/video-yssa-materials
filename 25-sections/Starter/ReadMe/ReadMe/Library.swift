@@ -1,4 +1,4 @@
-/// Copyright (c) 2020 Razeware LLC
+/// Copyright (c) 2021 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -18,6 +18,10 @@
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
 ///
+/// This project and source code may use libraries or frameworks that are
+/// released under various Open-Source licenses. Use of those libraries and
+/// frameworks are governed by their own individual licenses.
+///
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,55 +30,31 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import Combine
-import class UIKit.UIImage
+import SwiftUI
 
 class Library: ObservableObject {
   var sortedBooks: [Book] { booksCache }
-
+  
   /// Adds a new book at the start of the library's manually-sorted books.
-  func addNewBook(_ book: Book, image: UIImage?) {
+  func addNewBook(_ book: Book, image: Image?) {
     booksCache.insert(book, at: 0)
-    uiImages[book] = image
+    images[book] = image
   }
 
-  /// An in-memory cache of the manually-sorted books that are persistently stored.
+  /// An in-memory cache of the manually-sorted books.
   @Published private var booksCache: [Book] = [
     .init(title: "Ein Neues Land", author: "Shaun Tan"),
-    .init(
-      title: "Bosch",
-      author: "Laurinda Dixon",
-      microReview: "Earthily Delightful."
-    ),
+    .init(title: "Bosch", author: "Laurinda Dixon", microReview: "Earthily Delightful."),
     .init(title: "Dare to Lead", author: "Brené Brown"),
-    .init(
-      title: "Blasting for Optimum Health Recipe Book",
-      author: "NutriBullet",
-      microReview: "Blastastic!"
-    ),
-    .init(title: "Drinking with the Saints", author: "Michael P. Foley"),
+    .init(title: "Blasting for Optimum Health Recipe Book", author: "NutriBullet"),
+    .init(title: "Drinking with the Saints", author: "Michael P. Foley", microReview: "One of Ozma's favorites! 😻"),
     .init(title: "A Guide to Tea", author: "Adagio Teas"),
-    .init(title: "The Life and Complete Work of Francisco Goya", author: "P. Gassier & J Wilson"),
+    .init(title: "The Life and Complete Work of Francisco Goya", author: "P. Gassier & J Wilson", microReview: "Book too large for a micro-review!"),
     .init(title: "Lady Cottington's Pressed Fairy Book", author: "Lady Cottington"),
     .init(title: "How to Draw Cats", author: "Janet Rancan"),
     .init(title: "Drawing People", author: "Barbara Bradley"),
     .init(title: "What to Say When You Talk to Yourself", author: "Shad Helmstetter")
   ]
-
-  @Published var uiImages: [Book: UIImage] = [:]
-}
-
-private extension Dictionary {
-  /// Same values, corresponding to `map`ped keys.
-  ///
-  /// - Parameter transform: Accepts each key of the dictionary as its parameter
-  ///   and returns a key for the new dictionary.
-  /// - Postcondition: The collection of transformed keys must not contain duplicates.
-  func mapKeys<Transformed>(
-    _ transform: (Key) throws -> Transformed
-  ) rethrows -> [Transformed: Value] {
-    .init(
-      uniqueKeysWithValues: try map { (try transform($0.key), $0.value) }
-    )
-  }
+  
+  @Published var images: [Book: Image] = [:]
 }

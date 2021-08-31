@@ -47,14 +47,15 @@ struct BookRow: View {
   let book: Book
   
   var body: some View {
-    NavigationLink(destination: DetailView(book: book)) {
-      HStack {
-        Book.Image(title: book.title, size: 80)
-        TitleAndAuthorStack(book: book, titleFont: .title2, authorFont: .title3)
-          .lineLimit(1)
+    NavigationLink(
+      destination: DetailView(book: book)) {
+        HStack {
+          Book.Image(title: book.title, size: 80)
+          TitleAndAuthorStack(book: book, titleFont: .title2, authorFont: .title3)
+            .lineLimit(1)
+        }
+        .padding(.vertical)
       }
-      .padding(.vertical, 8)
-    }
   }
 }
 
@@ -63,8 +64,3 @@ struct ContentView_Previews: PreviewProvider {
     ContentView()
   }
 }
-
-
-
-
-

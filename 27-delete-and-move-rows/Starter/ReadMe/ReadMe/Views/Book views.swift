@@ -1,15 +1,15 @@
-/// Copyright (c) 2020 Razeware LLC
-/// 
+/// Copyright (c) 2021 Razeware LLC
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,7 +17,11 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
+///
+/// This project and source code may use libraries or frameworks that are
+/// released under various Open-Source licenses. Use of those libraries and
+/// frameworks are governed by their own individual licenses.
+///
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,26 +32,11 @@
 
 import SwiftUI
 
-struct BookmarkButton: View {
-  @ObservedObject var book: Book
-
-  var body: some View {
-    let bookmark = "bookmark"
-
-    Button {
-      book.readMe.toggle()
-    } label: {
-      Image(systemName: book.readMe ? "\(bookmark).fill" : bookmark)
-        .font(.system(size: 48, weight: .light))
-    }
-  }
-}
-
 struct TitleAndAuthorStack: View {
   let book: Book
   let titleFont: Font
   let authorFont: Font
-
+  
   var body: some View {
     VStack(alignment: .leading) {
       Text(book.title)
@@ -61,13 +50,13 @@ struct TitleAndAuthorStack: View {
 
 extension Book {
   struct Image: View {
-    let uiImage: UIImage?
+    let image: SwiftUI.Image?
     let title: String
     var size: CGFloat?
     let cornerRadius: CGFloat
-
+    
     var body: some View {
-      if let image = uiImage.map(SwiftUI.Image.init) {
+      if let image = image {
         image
           .resizable()
           .scaledToFill()
@@ -75,38 +64,17 @@ extension Book {
           .cornerRadius(cornerRadius)
       } else {
         let symbol =
-          SwiftUI.Image(title: title)
-          ?? .init(systemName: "book")
-
+        SwiftUI.Image(title: title)
+        ?? .init(systemName: "book")
+        
         symbol
           .resizable()
           .scaledToFit()
           .frame(width: size, height: size)
           .font(Font.title.weight(.light))
-          .foregroundColor(.secondary)
+          .foregroundColor(.secondary.opacity(0.5))
       }
     }
-  }
-}
-
-struct Book_Previews: PreviewProvider {
-  static var previews: some View {
-    VStack {
-      HStack {
-        BookmarkButton(book: .init())
-        BookmarkButton(book: .init(readMe: false))
-        TitleAndAuthorStack(
-          book: .init(),
-          titleFont: .title,
-          authorFont: .title2
-        )
-      }
-      
-      Book.Image(title: Book().title)
-      Book.Image(title: "")
-      Book.Image(title: "📖")
-    }
-    .previewedInAllColorSchemes
   }
 }
 
@@ -119,7 +87,7 @@ extension Image {
     else {
       return nil
     }
-
+    
     self.init(systemName: symbolName)
   }
 }
@@ -127,20 +95,24 @@ extension Image {
 extension Book.Image {
   /// A preview Image.
   init(title: String) {
-    self.init(
-      uiImage: nil,
-      title: title,
-      cornerRadius: .init()
-    )
+    self.init(image: nil, title: title, cornerRadius: .init())
   }
 }
 
-
 extension View {
   var previewedInAllColorSchemes: some View {
-    ForEach(
-      ColorScheme.allCases, id: \.self,
-      content: preferredColorScheme
-    )
+    ForEach(ColorScheme.allCases, id: \.self, content: preferredColorScheme)
+  }
+}
+
+struct Book_Previews: PreviewProvider {
+  static var previews: some View {
+    VStack {
+      TitleAndAuthorStack(book: .init(), titleFont: .title, authorFont: .title2)
+      Book.Image(title: Book().title)
+      Book.Image(title: "")
+      Book.Image(title: "📖")
+    }
+    .previewedInAllColorSchemes
   }
 }

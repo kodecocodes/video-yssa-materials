@@ -72,7 +72,5 @@ struct Book_Previews: PreviewProvider {
       Book.Image(title: "")
       Book.Image(title: "📖")
     }
-    .previewLayout(.sizeThatFits)
-    .padding()
   }
 }

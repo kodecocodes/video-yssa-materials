@@ -32,7 +32,6 @@
 
 import class PhotosUI.PHPickerViewController
 import SwiftUI
-import PhotosUI
 
 struct DetailView: View {
   let book: Book

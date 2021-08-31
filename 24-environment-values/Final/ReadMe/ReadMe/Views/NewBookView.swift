@@ -54,7 +54,8 @@ struct NewBookView: View {
             dismiss()
           }
           .disabled(
-            [book.title, book.author].contains(where: \.isEmpty)
+            [book.title, book.author]
+              .contains(where: \.isEmpty)
           )
         }
       }

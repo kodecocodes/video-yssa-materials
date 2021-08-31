@@ -59,6 +59,7 @@ struct ReviewAndImageStack: View {
         Button("Update Image…") { showingImagePicker = true }
         Spacer()
       }
+      .padding()
       
       Spacer()
     }

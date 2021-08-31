@@ -1,4 +1,4 @@
-/// Copyright (c) 2020 Razeware LLC
+/// Copyright (c) 2021 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -18,6 +18,10 @@
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
 ///
+/// This project and source code may use libraries or frameworks that are
+/// released under various Open-Source licenses. Use of those libraries and
+/// frameworks are governed by their own individual licenses.
+///
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -31,7 +35,7 @@ import SwiftUI
 
 extension PHPickerViewController {
   struct View {
-    @Binding var image: UIImage?
+    @Binding var image: Image?
   }
 }
 
@@ -57,7 +61,11 @@ extension PHPickerViewController.Delegate: PHPickerViewControllerDelegate {
     didFinishPicking results: [PHPickerResult]
   ) {
     results.first?.itemProvider.loadObject(ofClass: UIImage.self) { image, error in
-      DispatchQueue.main.async { self.image = image as? UIImage }
+      DispatchQueue.main.async {
+        if let uiImage = image as? UIImage {        
+          self.image = Image(uiImage: uiImage)
+        }
+      }
     }
 
     picker.dismiss(animated: true)
@@ -67,10 +75,10 @@ extension PHPickerViewController.Delegate: PHPickerViewControllerDelegate {
 // MARK: - private
 private extension PHPickerViewController {
   final class Delegate {
-    init(image: Binding<UIImage?>) {
+    init(image: Binding<Image?>) {
       _image = image
     }
 
-    @Binding var image: UIImage?
+    @Binding var image: Image?
   }
 }

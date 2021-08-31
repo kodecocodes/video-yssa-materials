@@ -52,7 +52,6 @@ struct ContentView: View {
         }
         .buttonStyle(.borderless)
         .padding(.vertical, 8)
-
         
         ForEach(library.sortedBooks) { book in
           BookRow(book: book, image: $library.images[book])
@@ -80,11 +79,10 @@ struct BookRow: View {
               .font(.subheadline)
               .foregroundColor(.secondary)
           }
+          .lineLimit(1)
         }
-        .lineLimit(1)
+        .padding(.vertical)
       }
-      .padding(.vertical, 8)
-    }
   }
 }
 
@@ -94,8 +92,3 @@ struct ContentView_Previews: PreviewProvider {
       .previewedInAllColorSchemes
   }
 }
-
-
-
-
-

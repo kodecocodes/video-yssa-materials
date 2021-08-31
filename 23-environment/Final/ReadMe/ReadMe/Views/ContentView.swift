@@ -96,8 +96,3 @@ struct ContentView_Previews: PreviewProvider {
       .previewedInAllColorSchemes
   }
 }
-
-
-
-
-
